@@ -44,3 +44,11 @@ export type Hold = {
 	usage: HoldUsage;
 	restriction: Restriction;
 };
+
+export type Route = {
+	holds: Hold[];
+	routeName: string;
+	settter: string;
+	grade: Grade;
+	description: string;
+};

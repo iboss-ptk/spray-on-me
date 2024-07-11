@@ -1,6 +1,11 @@
 <script lang="ts">
 	import '../app.css';
 	import Spraywall from '$lib/Spraywall.svelte';
+	import type { PageData } from './$types';
+
+	export let data: PageData;
 </script>
 
-<Spraywall />
+<div class="max-w-[1024px] m-auto">
+	<Spraywall routeString={data.route} />
+</div>

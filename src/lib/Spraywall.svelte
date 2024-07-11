@@ -1,6 +1,6 @@
 <script lang="ts">
 	import holds_json from '$lib/holds.json';
-	import { HOLD_USAGE, RESTRICTION, type Hold, type Grade } from './types';
+	import { HOLD_USAGE, RESTRICTION, type Hold, type Grade, type Route } from './types';
 	import HoldComponent from './Hold.svelte';
 	import * as ToggleGroup from '$lib/components/ui/toggle-group';
 	import * as Card from '$lib/components/ui/card';
@@ -8,20 +8,72 @@
 
 	import { onMount } from 'svelte';
 	import Textarea from './components/ui/textarea/textarea.svelte';
+	import Input from './components/ui/input/input.svelte';
+	import Button from './components/ui/button/button.svelte';
 
-	let holds: Hold[] = holds_json.map((hold) => ({
-		...hold,
-		usage: HOLD_USAGE.not_included,
-		restriction: RESTRICTION.none
-	}));
+	export let routeString: string | null;
 
-	let grade: Grade = 'v0';
+	let route: Route = {
+		holds: holds_json.map((hold) => ({
+			...hold,
+			usage: HOLD_USAGE.not_included,
+			restriction: RESTRICTION.none
+		})),
+		routeName: '',
+		settter: '',
+		grade: 'v0',
+		description: ''
+	};
+
+	if (routeString) {
+		route = decodeRoute(routeString);
+	}
+
+	let holds: Hold[] = route.holds;
+
+	let routeName = route.routeName;
+	let settter = route.settter;
+	let grade: Grade = route.grade;
+	let description = route.description;
 
 	let holdUsage = HOLD_USAGE.any_move;
 	let restriction = RESTRICTION.none;
 
 	let img: HTMLImageElement;
 	let imgScale: { x: number; y: number } | null = null;
+
+	function encodeRoute() {
+		const route: Route = {
+			holds: holds.filter((hold) => hold.usage !== HOLD_USAGE.not_included),
+			routeName,
+			settter,
+			grade,
+			description
+		};
+
+		return encodeURIComponent(btoa(JSON.stringify(route)));
+	}
+
+	function decodeRoute(route: string): Route {
+		const decoded = atob(decodeURIComponent(route));
+		const decodedRoute = JSON.parse(decoded);
+
+		const mergedHolds = holds_json.map((hold) => {
+			const matchedHold = decodedRoute.holds.find(
+				(decodedHold: Hold) => decodedHold.x === hold.x && decodedHold.y === hold.y
+			);
+			return matchedHold
+				? { ...hold, ...matchedHold }
+				: {
+						...hold,
+						usage: HOLD_USAGE.not_included,
+						restriction: RESTRICTION.none
+					};
+		});
+		decodedRoute.holds = mergedHolds;
+
+		return decodedRoute;
+	}
 
 	onMount(() => {
 		if (img) {
@@ -68,8 +120,6 @@
 	</div>
 </div>
 
-<Separator.Root class="my-4" />
-
 <div class="my-4">
 	<Card.Root class="m-4">
 		<Card.Header>
@@ -111,8 +161,28 @@
 	</Card.Root>
 </div>
 
+<Separator.Root class="my-4" />
+
 <div class="my-4">
 	<h2 class="text-xl font-bold m-4">Route Info</h2>
+
+	<Card.Root class="m-6">
+		<Card.Header>
+			<Card.Title>Route Name</Card.Title>
+		</Card.Header>
+		<Card.Content>
+			<Input bind:value={routeName} />
+		</Card.Content>
+	</Card.Root>
+
+	<Card.Root class="m-6">
+		<Card.Header>
+			<Card.Title>Setter</Card.Title>
+		</Card.Header>
+		<Card.Content>
+			<Input bind:value={settter} />
+		</Card.Content>
+	</Card.Root>
 
 	<Card.Root class="m-6">
 		<Card.Header>
@@ -138,7 +208,20 @@
 			>
 		</Card.Header>
 		<Card.Content>
-			<Textarea placeholder={`Eg. Crossover only, campus only`}></Textarea>
+			<Textarea
+				bind:value={description}
+				placeholder={`Eg. Crossover only, campus only, all holds are footholds`}
+			></Textarea>
 		</Card.Content>
 	</Card.Root>
+</div>
+
+<div class="container my-8 flex justify-between">
+	<span></span>
+	<Button
+		on:click={() => {
+			const encodedRoute = encodeRoute();
+			navigator.clipboard.writeText(`${window.location.origin}/?route=${encodedRoute}`);
+		}}>Copy Link</Button
+	>
 </div>
