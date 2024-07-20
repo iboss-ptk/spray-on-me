@@ -18,7 +18,7 @@
 	class:border-lime-500={hold.usage === HOLD_USAGE.start}
 	class:bg-rose-300={hold.usage === HOLD_USAGE.finish}
 	class:border-rose-500={hold.usage === HOLD_USAGE.finish}
-	class:border-[0.25em]={hold.usage !== HOLD_USAGE.not_included}
+	class:border-[3px]={hold.usage !== HOLD_USAGE.not_included}
 	class:bg-opacity-20={hold.usage !== HOLD_USAGE.not_included}
 	class:border-solid={hold.usage !== HOLD_USAGE.not_included}
 	class:border-dotted={hold.usage === HOLD_USAGE.not_included}

@@ -223,6 +223,24 @@
 			</Card.Content>
 		</Card.Root>
 	</div>
+{:else}
+	<div class="my-4">
+		<Card.Root class="m-6">
+			<Card.Header>
+				<Card.Title
+					>{#if routeName}
+						{routeName}
+					{:else}
+						<span class="font-normal italic">untitled</span>
+					{/if} - ({grade})</Card.Title
+				>
+			</Card.Header>
+			<Card.Content>
+				<p>{description}</p>
+				<p class="mt-5 text-xs text-right text-gray-500 italic">setter: {settter}</p>
+			</Card.Content>
+		</Card.Root>
+	</div>
 {/if}
 
 <div class="container my-8 flex justify-between">
