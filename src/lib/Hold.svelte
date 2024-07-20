@@ -11,19 +11,20 @@
 <button
 	on:click
 	style="top: {y}px; left: {x}px; width: {imgScale.x * 3}em; height: {imgScale.y * 3}em;"
-	class="absolute border-[1px] border-stone-800 rounded-full transform -translate-x-1/2 -translate-y-1/2 transition-colors transition-border duration-50 select-none"
-	class:bg-indigo-300={hold.usage === HOLD_USAGE.any_move}
-	class:border-indigo-500={hold.usage === HOLD_USAGE.any_move}
+	class="absolute border-[1px] rounded-full transform -translate-x-1/2 -translate-y-1/2 transition-colors transition-border duration-50 select-none"
+	class:bg-indigo-300={hold.usage === HOLD_USAGE.inbetween}
+	class:border-indigo-500={hold.usage === HOLD_USAGE.inbetween}
 	class:bg-lime-300={hold.usage === HOLD_USAGE.start}
 	class:border-lime-500={hold.usage === HOLD_USAGE.start}
 	class:bg-rose-300={hold.usage === HOLD_USAGE.finish}
 	class:border-rose-500={hold.usage === HOLD_USAGE.finish}
-	class:border-2={hold.usage !== HOLD_USAGE.not_included}
+	class:border-[0.2em]={hold.usage !== HOLD_USAGE.not_included}
 	class:bg-opacity-20={hold.usage !== HOLD_USAGE.not_included}
 	class:border-solid={hold.usage !== HOLD_USAGE.not_included}
 	class:border-dotted={hold.usage === HOLD_USAGE.not_included}
 	class:bg-stone-50={hold.usage === HOLD_USAGE.not_included}
 	class:bg-opacity-30={hold.usage === HOLD_USAGE.not_included}
+	class:border-stone-800={hold.usage === HOLD_USAGE.not_included}
 />
 
 <span

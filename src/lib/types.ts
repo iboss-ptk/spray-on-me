@@ -1,8 +1,8 @@
-export type HoldUsage = 'not_included' | 'any_move' | 'start' | 'finish';
+export type HoldUsage = 'not_included' | 'inbetween' | 'start' | 'finish';
 
 export const HOLD_USAGE: { [key in HoldUsage]: HoldUsage } = {
 	not_included: 'not_included',
-	any_move: 'any_move',
+	inbetween: 'inbetween',
 	start: 'start',
 	finish: 'finish'
 };
