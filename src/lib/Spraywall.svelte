@@ -226,11 +226,16 @@
 {/if}
 
 <div class="container my-8 flex justify-between">
-	<span></span>
 	<Button
 		on:click={() => {
 			const encodedRoute = encodeRoute();
 			navigator.clipboard.writeText(`${window.location.origin}/?route=${encodedRoute}`);
 		}}>Copy Link</Button
+	>
+	<span></span>
+	<Button
+		on:click={() => {
+			mode = mode === 'edit' ? 'view' : 'edit';
+		}}>{mode === 'edit' ? 'preview' : 'edit'}</Button
 	>
 </div>
