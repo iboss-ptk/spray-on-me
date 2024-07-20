@@ -179,7 +179,7 @@
 				<Card.Title>Route Name</Card.Title>
 			</Card.Header>
 			<Card.Content>
-				<Input bind:value={routeName} />
+				<Input bind:value={routeName} placeholder="untitled" />
 			</Card.Content>
 		</Card.Root>
 
@@ -188,7 +188,7 @@
 				<Card.Title>Setter</Card.Title>
 			</Card.Header>
 			<Card.Content>
-				<Input bind:value={settter} />
+				<Input bind:value={settter} placeholder="anonymous" />
 			</Card.Content>
 		</Card.Root>
 
@@ -232,13 +232,22 @@
 						{routeName}
 					{:else}
 						<span class="font-normal italic">untitled</span>
-					{/if} - ({grade})</Card.Title
-				>
+					{/if} - ({grade})
+				</Card.Title>
+				<p class="mt-5 text-xs text-gray-500">
+					{#if settter}
+						{settter}
+					{:else}
+						<span class="italic">anonymous</span>
+					{/if}
+				</p>
 			</Card.Header>
-			<Card.Content>
-				<p>{description}</p>
-				<p class="mt-5 text-xs text-right text-gray-500 italic">setter: {settter}</p>
-			</Card.Content>
+
+			{#if description}
+				<Card.Content>
+					<p>{description}</p>
+				</Card.Content>
+			{/if}
 		</Card.Root>
 	</div>
 {/if}
