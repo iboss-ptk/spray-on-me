@@ -7,5 +7,5 @@
 </script>
 
 <div class="max-w-[1024px] m-auto">
-	<Spraywall routeString={data.route} />
+	<Spraywall routeString={data.route} mode={data.mode} />
 </div>

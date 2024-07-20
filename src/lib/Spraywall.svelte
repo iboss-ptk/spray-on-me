@@ -12,6 +12,7 @@
 	import Button from './components/ui/button/button.svelte';
 
 	export let routeString: string | null;
+	export let mode: string | null;
 
 	let route: Route = {
 		holds: holds_json.map((hold) => ({
@@ -102,19 +103,21 @@
 
 		{#if imgScale}
 			{#each holds as hold, index}
-				<HoldComponent
-					{hold}
-					{imgScale}
-					on:click={() => {
-						if (holds[index].usage === HOLD_USAGE.not_included) {
-							holds[index].usage = holdUsage;
-							holds[index].restriction = restriction;
-						} else {
-							holds[index].usage = HOLD_USAGE.not_included;
-							holds[index].restriction = RESTRICTION.none;
-						}
-					}}
-				/>
+				{#if mode === 'edit' || hold.usage !== HOLD_USAGE.not_included}
+					<HoldComponent
+						{hold}
+						{imgScale}
+						on:click={() => {
+							if (holds[index].usage === HOLD_USAGE.not_included) {
+								holds[index].usage = holdUsage;
+								holds[index].restriction = restriction;
+							} else {
+								holds[index].usage = HOLD_USAGE.not_included;
+								holds[index].restriction = RESTRICTION.none;
+							}
+						}}
+					/>
+				{/if}
 			{/each}
 		{/if}
 	</div>

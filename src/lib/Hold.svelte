@@ -10,22 +10,25 @@
 
 <button
 	on:click
+	style="top: {y}px; left: {x}px; width: {imgScale.x * 3}em; height: {imgScale.y * 3}em;"
 	class="absolute border-[1px] border-stone-800 rounded-full transform -translate-x-1/2 -translate-y-1/2 transition-colors transition-border duration-50 select-none"
-	style="top: {y}px; left: {x}px; width: {imgScale.x * 2}em; height: {imgScale.y * 2}em;"
 	class:bg-indigo-300={hold.usage === HOLD_USAGE.any_move}
+	class:border-indigo-500={hold.usage === HOLD_USAGE.any_move}
 	class:bg-lime-300={hold.usage === HOLD_USAGE.start}
+	class:border-lime-500={hold.usage === HOLD_USAGE.start}
 	class:bg-rose-300={hold.usage === HOLD_USAGE.finish}
-	class:opacity-80={hold.usage !== HOLD_USAGE.not_included}
+	class:border-rose-500={hold.usage === HOLD_USAGE.finish}
+	class:border-2={hold.usage !== HOLD_USAGE.not_included}
+	class:bg-opacity-20={hold.usage !== HOLD_USAGE.not_included}
 	class:border-solid={hold.usage !== HOLD_USAGE.not_included}
 	class:border-dotted={hold.usage === HOLD_USAGE.not_included}
 	class:bg-stone-50={hold.usage === HOLD_USAGE.not_included}
-	class:opacity-50={hold.usage === HOLD_USAGE.not_included}
->
-</button>
+	class:bg-opacity-30={hold.usage === HOLD_USAGE.not_included}
+/>
 
 <span
 	class="absolute transform -translate-x-1/2 -translate-y-1/2 align-middle"
-	style="top: {y}px; left: {x}px; font-size: {imgScale.x}em;"
+	style="top: {y}px; left: {x}px; font-size: {imgScale.x * 1.5}em;"
 >
 	{#if hold.restriction === 'hands'}
 		🖐️
